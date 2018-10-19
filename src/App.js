@@ -47,20 +47,54 @@ class App extends Component {
     filmID += 1;
   }
 
+  removeMovieEntry = filmID =>
+    this.setState({
+      films: [
+      ...this.state.films.filter(film => filmID !== film.filmID),
+    ]
+  });
+
+  moveMovieEntryUp = (filmID, index) => {
+    let newIndex = index - 1;
+    newIndex = newIndex >= 0 ? newIndex : newIndex + 1;
+    const temp = this.state.films[index];
+    this.state.films[index] = this.state.films[newIndex];
+    this.state.films[newIndex] = temp;
+    this.setState({
+
+    });
+  }
+
+  moveMovieEntryDown = (filmID, index) => {
+    let newIndex = index + 1;
+    newIndex = newIndex = this.state.films.length ? newIndex : newIndex - 1;
+    const temp = this.state.films[index];
+    this.state.films[index] = this.state.films[newIndex];
+    this.state.films[newIndex] = temp;
+    this.setState({
+
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <div className="wrapper">
           <Header
-          shouldHideForm={this.state.shouldHideForm}
-          toggleAddMovie={this.toggleAddMovie}
-          submitPendingFilm={this.submitPendingFilm}
-          pendingTitle={this.state.pendingTitle}
-          pendingYear={this.state.pendingYear}
-          pendingComment={this.state.pendingComment}
-          inputPendingField={this.inputPendingField}
+            shouldHideForm={this.state.shouldHideForm}
+            toggleAddMovie={this.toggleAddMovie}
+            submitPendingFilm={this.submitPendingFilm}
+            pendingTitle={this.state.pendingTitle}
+            pendingYear={this.state.pendingYear}
+            pendingComment={this.state.pendingComment}
+            inputPendingField={this.inputPendingField}
           />
-          <MainContent />
+          <MainContent
+            films={this.state.films}
+            removeMovieEntry={this.removeMovieEntry}
+            moveMovieEntryUp={this.moveMovieEntryUp}
+            moveMovieEntryDown={this.moveMovieEntryDown}
+          />
         </div>{/* /wrapper */}
         {/* footer */}
         <footer>

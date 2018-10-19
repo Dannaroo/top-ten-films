@@ -1,0 +1,2 @@
+- move up and down functions are adjusting state directly. this is not allowed.
+-move down function does not work when attempting to move below the bottom film.
