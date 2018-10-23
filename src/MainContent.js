@@ -7,18 +7,18 @@ const MainContent = props =>
 <main>
   <div className="topTenList">
     <ul>
-      {props.films
-      // .filter(guest => !props.isFiltered || guest.isConfirmed)
-      .map((film, index) =>
+      {props.films.map((film, index) =>
       <MovieEntry
         index={index}
+
+        order={film.order}
         filmID={film.filmID}
         name={film.title}
         year={film.year}
         comment={film.comment}
         removeMovieEntry={() => props.removeMovieEntry(film.filmID)}
-        moveMovieEntryUp={() => props.moveMovieEntryUp(film.filmID, index)}
-        moveMovieEntryDown={() => props.moveMovieEntryDown(film.filmID, index)}
+        moveMovieEntryUp={() => props.moveMovieEntryUp(film.order)}
+        moveMovieEntryDown={() => props.moveMovieEntryDown(film.order)}
        />
     )}
     </ul>
