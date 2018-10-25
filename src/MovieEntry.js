@@ -1,16 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SortArrows from './SortArrows';
 
 
 const MovieEntry = props =>
   <li>
     <h4 className="numbers">{props.index + 1}</h4>
-    <button className="up" onClick={() => props.moveMovieEntryUp(props.order)}>Up</button>
-    <button className="down" onClick={() => props.moveMovieEntryDown(props.order)}>Down</button>
+    <SortArrows
+      moveMovieEntryUp= {props.moveMovieEntryUp}
+      moveMovieEntryDown= {props.moveMovieEntryDown}
+      order= {props.order}
+      upArrow= {props.upArrow}
+      downArrow= {props.downArrow}
+    />
     <h3>{props.name}</h3>
     <span>{props.year}</span>
     <p>{props.comment}</p>
-    <button className="remove" onClick={() => props.removeMovieEntry(props.filmID)}>Remove</button>
+    <button className="remove" onClick={() => props.removeMovieEntry(props.filmID)}>{String.fromCharCode(8856)}</button>
   </li>
 
 MovieEntry.propTypes = {
@@ -23,6 +29,8 @@ MovieEntry.propTypes = {
   removeMovieEntry: PropTypes.func.isRequired,
   moveMovieEntryUp: PropTypes.func.isRequired,
   moveMovieEntryDown: PropTypes.func.isRequired,
+  upArrow: PropTypes.bool.isRequired,
+  downArrow: PropTypes.bool.isRequired,
 }
 
 export default MovieEntry;

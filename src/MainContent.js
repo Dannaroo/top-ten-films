@@ -16,6 +16,8 @@ const MainContent = props =>
         name={film.title}
         year={film.year}
         comment={film.comment}
+        upArrow={film.upArrow}
+        downArrow={film.downArrow}
         removeMovieEntry={() => props.removeMovieEntry(film.filmID)}
         moveMovieEntryUp={() => props.moveMovieEntryUp(film.order)}
         moveMovieEntryDown={() => props.moveMovieEntryDown(film.order)}
