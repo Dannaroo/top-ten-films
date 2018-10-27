@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 const SortArrows = props =>
 <div>
   {props.upArrow ?
-  <button className="up" onClick={() => props.moveMovieEntryUp(props.order)}>{String.fromCharCode(8593)}</button>
+  <button lassName="up" onClick={() => props.moveMovieEntryUp(props.order)}>{String.fromCharCode(8593)}</button>
   :
-  "No"
+  <button className="up disabled" onClick={() => props.moveMovieEntryUp(props.order)}>{String.fromCharCode(8593)}</button>
   }
   {props.downArrow ?
   <button className="down" onClick={() => props.moveMovieEntryDown(props.order)}>{String.fromCharCode(8595)}</button>
   :
-  "No"
+  <button className="down disabled" onClick={() => props.moveMovieEntryDown(props.order)}>{String.fromCharCode(8595)}</button>
   }
 </div>
 

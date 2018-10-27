@@ -5,7 +5,7 @@ const Header = props =>
 <header>
   <h1 id="myHeading">Top Ten Films</h1>
   <p>Make a list of your top ten favourite films.</p>
-  <button id="toggleNewMovieForm" onClick={props.toggleAddMovie}>Add New Movie</button>
+  <button id="toggleNewMovieForm" onClick={props.toggleAddMovie}>{props.shouldHideForm === true ? "Add New Movie" : "Hide"}</button>
   <form
     className="newMovieForm"
     className={props.shouldHideForm ? 'hidden' : ''}

@@ -84,6 +84,8 @@ class App extends Component {
             comment: this.state.pendingComment,
             filmID,
             order,
+            upArrow: true,
+            downArrow: true,
           },
           ...prevState.films
         ],
@@ -94,6 +96,7 @@ class App extends Component {
     });
     filmID += 1;
     order += 1;
+    this.setArrows(); // DOES NOT FIRE
   }
 
   // append an up or down arrow depending on the location of the moviveEntry
@@ -109,32 +112,44 @@ class App extends Component {
       return true;
     }
   }
+
 // IN PROGRESS
-  setArrows = () =>
-  this.setState({
-    films: this.state.films.map(film => {
-        return {
-          ...film,
-          upArrow: this.appendArrow(film.order),
-          downArrow: this.appendArrow(film.order),
-        };
-    })
-  });
+  setArrows = () => {
+    const newFilms = this.state.films;
+    newFilms
+    .map((film, index) => {
+      film.upArrow = true;
+      film.downArrow = true;
+      return film
+    });
+    newFilms[0].upArrow = false;
+    newFilms[newFilms.length-1].downArrow = false;
+      console.log(newFilms);
+    // this.setState({
+    //   films: [
+    //   ...this.state.films = newFilms,
+    // ]
+    // });
+    }
+
   // IN PROGRESS
 
   // remove an entry from the top ten list
-  removeMovieEntry = filmID =>
-      this.setState({
-        films: [
+  removeMovieEntry = filmID => {
+    this.setState({
+      films: [
         ...this.state.films.filter(film => filmID !== film.filmID).map((film, index) => {
           film.order = this.state.films.length - index;
           return film
         }),
       ]
     });
+    this.setArrows(); //DOES NOT FIRE
+  }
 
   //get the order id position of a film and the direction you want it to move (up or down). swap the order properties of the moving films, then resort the order properties of the array.
   moveMovieEntry = (id, direction) => {
+
     let newFilms = this.state.films.map((film, index) => {
       if(film.order === (id + direction)) {
         film.order = (id);
@@ -155,16 +170,40 @@ class App extends Component {
   }
 
   // move a movie entry up (+1 order) the list
-  moveMovieEntryUp = id =>
+  moveMovieEntryUp = id => {
     this.moveMovieEntry(id, 1);
+    this.setArrows();
+  }
 
   // move a movie entry down (-1 order) the list
-  moveMovieEntryDown = id =>
+  moveMovieEntryDown = id => {
     this.moveMovieEntry(id, -1);
+    this.setArrows();
+  }
+
+// find the top three movies and give them the appropriate class names.
+  getTopThree = (index) => {
+
+      if (index === 0) {
+        return "numbers first";
+      } else if (index === 1) {
+        return "numbers second";
+      } else if(index === 2) {
+        return "numbers third";
+      } else {
+        return "numbers";
+      }
+
+  }
+  componentWillMount() {
+    this.setArrows();
+  }
+
 
   render() {
 
     return (
+
       <div className="App">
         <div className="wrapper">
           <Header
@@ -181,6 +220,7 @@ class App extends Component {
             removeMovieEntry={this.removeMovieEntry}
             moveMovieEntryUp={this.moveMovieEntryUp}
             moveMovieEntryDown={this.moveMovieEntryDown}
+            getTopThree={this.getTopThree}
           />
         </div>{/* /wrapper */}
         {/* footer */}

@@ -5,7 +5,7 @@ import SortArrows from './SortArrows';
 
 const MovieEntry = props =>
   <li>
-    <h4 className="numbers">{props.index + 1}</h4>
+    <h4 className={props.getTopThree(props.index)}>{props.index + 1}</h4>
     <SortArrows
       moveMovieEntryUp= {props.moveMovieEntryUp}
       moveMovieEntryDown= {props.moveMovieEntryDown}
@@ -31,6 +31,7 @@ MovieEntry.propTypes = {
   moveMovieEntryDown: PropTypes.func.isRequired,
   upArrow: PropTypes.bool.isRequired,
   downArrow: PropTypes.bool.isRequired,
+  getTopThree: PropTypes.func.isRequired,
 }
 
 export default MovieEntry;

@@ -104,13 +104,12 @@ li span {
 .numbers {
   color: black;
   border: 3px solid black;
-  border radius: 50%;
+  border-radius: 50%;
   display: block;
   padding: 5px;
-  border-radius: 50%;
   font-size: 1.5em;
   font-family: "arial black";
-  min-width: 33px;
+  min-width: 50px;
   text-align: center;
 }
 
@@ -151,4 +150,10 @@ footer {
 
 .hidden {
   display: none;
+}
+
+.disabled {
+  background: inherit;
+  color: inherit;
+  cursor: default;
 }

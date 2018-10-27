@@ -21,6 +21,7 @@ const MainContent = props =>
         removeMovieEntry={() => props.removeMovieEntry(film.filmID)}
         moveMovieEntryUp={() => props.moveMovieEntryUp(film.order)}
         moveMovieEntryDown={() => props.moveMovieEntryDown(film.order)}
+        getTopThree={() => props.getTopThree(index)}
        />
     )}
     </ul>
@@ -32,6 +33,7 @@ MainContent.propTypes = {
   removeMovieEntry: PropTypes.func.isRequired,
   moveMovieEntryUp: PropTypes.func.isRequired,
   moveMovieEntryDown: PropTypes.func.isRequired,
+  getTopThree: PropTypes.func.isRequired,
 }
 
 export default MainContent;
