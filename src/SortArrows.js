@@ -7,12 +7,12 @@ const SortArrows = props =>
   {props.upArrow ?
   <button lassName="up" onClick={() => props.moveMovieEntryUp(props.order)}>{String.fromCharCode(8593)}</button>
   :
-  <button className="up disabled" onClick={() => props.moveMovieEntryUp(props.order)}>{String.fromCharCode(8593)}</button>
+  <button className="up disabled">{String.fromCharCode(8593)}</button>
   }
   {props.downArrow ?
   <button className="down" onClick={() => props.moveMovieEntryDown(props.order)}>{String.fromCharCode(8595)}</button>
   :
-  <button className="down disabled" onClick={() => props.moveMovieEntryDown(props.order)}>{String.fromCharCode(8595)}</button>
+  <button className="down disabled">{String.fromCharCode(8595)}</button>
   }
 </div>
 

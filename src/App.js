@@ -107,23 +107,18 @@ class App extends Component {
         films: prevState.films.map((film, index) => {
           // if its the first entry. disable the up arrow
           if(index === 0) {
-            console.log("if 1");
             film.upArrow = false;
             // ...if there is only one entry: disable the down arrow too.
             if(prevState.films.length === 1) {
-              console.log("if 2");
               film.downArrow = false;
             } else {
-              console.log("if 3");
               film.downArrow = true;
             }
             return film
           } else if (index === prevState.films.length - 1) {
-            console.log("if 4");
             film.downArrow = false;
             film.upArrow = true;
           } else {
-            console.log("if 5");
             film.upArrow = true;
             film.downArrow = true;
             return film
@@ -149,28 +144,20 @@ class App extends Component {
   }
 
   //get the order id position of a film and the direction you want it to move (up or down). swap the order properties of the moving films, then resort the order properties of the array.
-  moveMovieEntry = (id, direction) => {
-
-    let newFilms = this.state.films.map((film, index) => {
-      // check first to make sure no buttons are disabled. (1 = up. -1 = down)
-      if((direction === 1 && film.upArrow === true) || (direction === -1 && film.downArrow === true)) {
-        if(film.order === (id + direction)) {
-          film.order = (id);
-          return film;
-        }
-        if(film.order === id) {
-          film.order = (id + direction);
-          return film;
-        } else {
-          return film;
-        }
-      } else {
-        return film;
-      }
-    }).sort((a, b) => a.order < b.order);
+  moveMovieEntry = (order, direction) => {
     this.setState({
       films: [
-      ...this.state.films = newFilms,
+      ...this.state.films.map((film, index) => {
+          if(film.order === (order + direction)) {
+            film.order = (order);
+            return film;
+          } else if (film.order === order) {
+            film.order = (order + direction);
+            return film;
+          } else {
+            return film;
+          }
+      }).sort((a, b) => a.order < b.order),
     ]
     });
   }
