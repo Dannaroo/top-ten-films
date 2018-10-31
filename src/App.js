@@ -3,8 +3,8 @@ import Header from './Header';
 import MainContent from './MainContent';
 
 // declare a variable to use as a key for every film in the list. both to be -1 with empty films array.
-let filmID = 4;
-let order = 4;
+let filmID = 0;
+let order = 0;
 
 class App extends Component {
 
@@ -14,51 +14,51 @@ class App extends Component {
     pendingYear: "",
     pendingComment: "",
     films: [
-      {
-        title: 1,
-        year: 1,
-        comment: 1,
-        filmID: 0,
-        order: 4,
-        upArrow: true,
-        downArrow: true,
-      },
-      {
-        title: 2,
-        year: 2,
-        comment: 2,
-        filmID: 1,
-        order: 3,
-        upArrow: true,
-        downArrow: true,
-      },
-      {
-        title: 3,
-        year: 3,
-        comment: 3,
-        filmID: 2,
-        order: 2,
-        upArrow: true,
-        downArrow: true,
-      },
-      {
-        title: 4,
-        year: 4,
-        comment: 4,
-        filmID: 3,
-        order: 1,
-        upArrow: true,
-        downArrow: true,
-      },
-      {
-        title: 5,
-        year: 5,
-        comment: 5,
-        filmID: 4,
-        order: 0,
-        upArrow: true,
-        downArrow: true,
-      },
+      // {
+      //   title: 1,
+      //   year: 1,
+      //   comment: 1,
+      //   filmID: 0,
+      //   order: 4,
+      //   upArrow: true,
+      //   downArrow: true,
+      // },
+      // {
+      //   title: 2,
+      //   year: 2,
+      //   comment: 2,
+      //   filmID: 1,
+      //   order: 3,
+      //   upArrow: true,
+      //   downArrow: true,
+      // },
+      // {
+      //   title: 3,
+      //   year: 3,
+      //   comment: 3,
+      //   filmID: 2,
+      //   order: 2,
+      //   upArrow: true,
+      //   downArrow: true,
+      // },
+      // {
+      //   title: 4,
+      //   year: 4,
+      //   comment: 4,
+      //   filmID: 3,
+      //   order: 1,
+      //   upArrow: true,
+      //   downArrow: true,
+      // },
+      // {
+      //   title: 5,
+      //   year: 5,
+      //   comment: 5,
+      //   filmID: 4,
+      //   order: 0,
+      //   upArrow: true,
+      //   downArrow: true,
+      // },
     ],
   }
 
@@ -84,8 +84,8 @@ class App extends Component {
             comment: this.state.pendingComment,
             filmID,
             order,
-            upArrow: true,
-            downArrow: true,
+            upArrow: false,
+            downArrow: false,
           },
           ...prevState.films
         ],
@@ -96,41 +96,42 @@ class App extends Component {
     });
     filmID += 1;
     order += 1;
-    this.setArrows(); // DOES NOT FIRE
+    this.setArrows();
   }
 
-  // append an up or down arrow depending on the location of the moviveEntry
-  appendArrow = filmOrder => {
-    console.log('appendArrow');
-    if (filmOrder === 0) {
-      console.log(filmOrder, ' = 0');
-      return false;
-    } else if (filmOrder === this.state.films.length) {
-      console.log(filmOrder, ' = ', this.state.films.length);
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-// IN PROGRESS
+// if there are no entries, do not set any arrows at all, or...
   setArrows = () => {
-    const newFilms = this.state.films;
-    newFilms
-    .map((film, index) => {
-      film.upArrow = true;
-      film.downArrow = true;
-      return film
-    });
-    newFilms[0].upArrow = false;
-    newFilms[newFilms.length-1].downArrow = false;
-      console.log(newFilms);
-    // this.setState({
-    //   films: [
-    //   ...this.state.films = newFilms,
-    // ]
-    // });
+      // ...if there are multiple entries, set the first entries upArrow to false and the last entries downArrow to false and all the remaining both arrows to true.
+    if (this.state.films.length) {
+      this.setState( prevState => {
+        films: prevState.films.map((film, index) => {
+          // if its the first entry. disable the up arrow
+          if(index === 0) {
+            console.log("if 1");
+            film.upArrow = false;
+            // ...if there is only one entry: disable the down arrow too.
+            if(prevState.films.length === 1) {
+              console.log("if 2");
+              film.downArrow = false;
+            } else {
+              console.log("if 3");
+              film.downArrow = true;
+            }
+            return film
+          } else if (index === prevState.films.length - 1) {
+            console.log("if 4");
+            film.downArrow = false;
+            film.upArrow = true;
+          } else {
+            console.log("if 5");
+            film.upArrow = true;
+            film.downArrow = true;
+            return film
+          }
+        });
+      });
     }
+  }
 
   // IN PROGRESS
 
@@ -144,20 +145,25 @@ class App extends Component {
         }),
       ]
     });
-    this.setArrows(); //DOES NOT FIRE
+    this.setArrows();
   }
 
   //get the order id position of a film and the direction you want it to move (up or down). swap the order properties of the moving films, then resort the order properties of the array.
   moveMovieEntry = (id, direction) => {
 
     let newFilms = this.state.films.map((film, index) => {
-      if(film.order === (id + direction)) {
-        film.order = (id);
-        return film;
-      }
-      if(film.order === id) {
-        film.order = (id + direction);
-        return film;
+      // check first to make sure no buttons are disabled. (1 = up. -1 = down)
+      if((direction === 1 && film.upArrow === true) || (direction === -1 && film.downArrow === true)) {
+        if(film.order === (id + direction)) {
+          film.order = (id);
+          return film;
+        }
+        if(film.order === id) {
+          film.order = (id + direction);
+          return film;
+        } else {
+          return film;
+        }
       } else {
         return film;
       }

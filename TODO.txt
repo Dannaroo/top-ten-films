@@ -1,4 +1,8 @@
 - move up and down functions are adjusting state directly. this is not allowed.-FIXED
 -move down function does not work when attempting to move below the bottom film.
 -sometimes two clicks are required for a film to move down.
--fix setArrows function
+-fix setArrows function -FIXED
+-setArrows function not firing after adding/removing film entries.-FIXED
+-setState does nothing in setArrows. state is being changed by newFilms??-USED PREVSTATE
+-sometimes movie entries have the same order value.
+-sometimes takes two clicks to move an entry up or down.
