@@ -4,5 +4,6 @@
 -fix setArrows function -FIXED
 -setArrows function not firing after adding/removing film entries.-FIXED
 -setState does nothing in setArrows. state is being changed by newFilms??-USED PREVSTATE
--sometimes movie entries have the same order value.
--sometimes takes two clicks to move an entry up or down.
+-sometimes movie entries have the same order value.- FIXED
+-sometimes takes two clicks to move an entry up or down. -FIXED
+-after local Storage implementation. order property is not being updated correctly on add/remove of movie entry.

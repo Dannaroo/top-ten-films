@@ -60,7 +60,27 @@ class App extends Component {
       //   downArrow: true,
       // },
     ],
+    localStorageFilms: [],
   }
+
+  //make sure the browser supports localStorage
+supportsLocalStorage = () => {
+    try {
+      return 'localStorage' in window && window['localStorage'] !== null;
+    } catch(e) {
+      return false;
+    }
+}
+
+// populate the films array with entries from local storage if it exists.
+populateFromLocalStorage = () => {
+  const movieList = localStorage.getItem('movieList');
+  if(movieList) {
+    return JSON.parse(movieList);
+  } else {
+    return [];
+  }
+}
 
   // Toggle the Add Movie Button to hide or display the form to input new movies.
   toggleAddMovie = () =>
@@ -114,29 +134,27 @@ class App extends Component {
             } else {
               film.downArrow = true;
             }
-            return film
+            return film;
           } else if (index === prevState.films.length - 1) {
             film.downArrow = false;
             film.upArrow = true;
           } else {
             film.upArrow = true;
             film.downArrow = true;
-            return film
+            return film;
           }
         });
       });
     }
   }
 
-  // IN PROGRESS
 
   // remove an entry from the top ten list
   removeMovieEntry = filmID => {
     this.setState({
-      films: [
-        ...this.state.films.filter(film => filmID !== film.filmID).map((film, index) => {
+      films: [ ...this.state.films.filter(film => filmID !== film.filmID).map((film, index) => {
           film.order = this.state.films.length - index;
-          return film
+          return film;
         }),
       ]
     });
@@ -188,9 +206,29 @@ class App extends Component {
       }
 
   }
+
   componentWillMount() {
     this.setArrows();
+    this.supportsLocalStorage();
+    console.log('2');
+    if(this.supportsLocalStorage()) {
+      console.log('1');
+      this.setState({
+        films: this.populateFromLocalStorage(),
+      });
+
+    }
   }
+
+  // ensure storage object matches current film state
+  componentDidUpdate(prevProps, prevState) {
+  // Typical usage (don't forget to compare props):
+  if (this.state.films !== prevState.films) {
+    if(this.supportsLocalStorage()) {
+      localStorage.setItem('movieList', JSON.stringify(this.state.films));
+    }
+  }
+}
 
 
   render() {
